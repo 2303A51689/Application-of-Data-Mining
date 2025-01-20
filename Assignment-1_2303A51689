@@ -1,0 +1,201 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNu5bK5YQKu/LeJugcc/ICr",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/2303A51689/Application-of-Data-Mining/blob/main/Assignment-1_2303A51689\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 16,
+      "metadata": {
+        "id": "cdYN2BwFoCMd"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "data=pd.read_csv('/content/_titanic.csv')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "if not data.empty:\n",
+        "    null_values = data.isnull().sum()\n",
+        "    print(\"Null Values:\")\n",
+        "    print(null_values)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DFXodtlytsUw",
+        "outputId": "6cc94fc6-4d4c-4a22-f599-8afa033bdf4d"
+      },
+      "execution_count": 26,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Null Values:\n",
+            "PassengerId      0\n",
+            "Survived         0\n",
+            "Pclass           0\n",
+            "Name             0\n",
+            "Sex              0\n",
+            "Age            177\n",
+            "SibSp            0\n",
+            "Parch            0\n",
+            "Ticket           0\n",
+            "Fare             0\n",
+            "Cabin          687\n",
+            "Embarked         2\n",
+            "dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "    mean_values = data.mean(numeric_only=True)\n",
+        "    median_values = data.median(numeric_only=True)\n",
+        "    mode_values = data.mode().iloc[0]"
+      ],
+      "metadata": {
+        "id": "srowLpMAustm"
+      },
+      "execution_count": 27,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "    print(\"\\nMean Values:\")\n",
+        "    print(mean_values)\n",
+        "    print(\"\\nMedian Values:\")\n",
+        "    print(median_values)\n",
+        "    print(\"\\nMode Values:\")\n",
+        "    print(mode_values)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GxtwxgutuzM_",
+        "outputId": "9cfc9f55-6ce9-4a45-eae3-c8e195fc191c"
+      },
+      "execution_count": 28,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "Mean Values:\n",
+            "PassengerId    446.000000\n",
+            "Survived         0.383838\n",
+            "Pclass           2.308642\n",
+            "Age             29.699118\n",
+            "SibSp            0.523008\n",
+            "Parch            0.381594\n",
+            "Fare            32.204208\n",
+            "dtype: float64\n",
+            "\n",
+            "Median Values:\n",
+            "PassengerId    446.0000\n",
+            "Survived         0.0000\n",
+            "Pclass           3.0000\n",
+            "Age             28.0000\n",
+            "SibSp            0.0000\n",
+            "Parch            0.0000\n",
+            "Fare            14.4542\n",
+            "dtype: float64\n",
+            "\n",
+            "Mode Values:\n",
+            "PassengerId                      1\n",
+            "Survived                       0.0\n",
+            "Pclass                         3.0\n",
+            "Name           Abbing, Mr. Anthony\n",
+            "Sex                           male\n",
+            "Age                           24.0\n",
+            "SibSp                          0.0\n",
+            "Parch                          0.0\n",
+            "Ticket                        1601\n",
+            "Fare                          8.05\n",
+            "Cabin                      B96 B98\n",
+            "Embarked                         S\n",
+            "Name: 0, dtype: object\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "    scaler = MinMaxScaler()\n",
+        "    numeric_data = data.select_dtypes(include=['float64', 'int64'])\n",
+        "    normalized_data = pd.DataFrame(scaler.fit_transform(numeric_data), columns=numeric_data.columns)"
+      ],
+      "metadata": {
+        "id": "pCBUgL_au-Vs"
+      },
+      "execution_count": 20,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "    print(\"\\nNormalized Data (first 5 rows):\")\n",
+        "    print(normalized_data.head())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "cJOoN-gTvAjr",
+        "outputId": "577d410d-cfff-43e8-ca07-353c10618aa7"
+      },
+      "execution_count": 34,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "Normalized Data (first 5 rows):\n",
+            "   PassengerId  Survived  Pclass       Age  SibSp  Parch      Fare\n",
+            "0     0.000000       0.0     1.0  0.271174  0.125    0.0  0.014151\n",
+            "1     0.001124       1.0     0.0  0.472229  0.125    0.0  0.139136\n",
+            "2     0.002247       1.0     1.0  0.321438  0.000    0.0  0.015469\n",
+            "3     0.003371       1.0     0.0  0.434531  0.125    0.0  0.103644\n",
+            "4     0.004494       0.0     1.0  0.434531  0.000    0.0  0.015713\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
